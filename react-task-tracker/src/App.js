@@ -1,17 +1,26 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Header from "./Components/Header";
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const [state, setState] = useState({ settings: null });
 
-const x = true;
-const name = 'Rohi';
+  useEffect(() => {
+    fetch("settings.json").then((response) => {
+      response.json().then((settings) => {
+        // instead of setting state you can use it any other way
+        setState({ settings: settings });
+      });
+    });
+  });
 
   return (
     <div className="container">
-      <h1>Hello {name}</h1>
-      <h1>React {x ? "Yes" : "No"}</h1>
+      <Header />
     </div>
   );
 }
+
+// class App extends React.component {}
 
 export default App;
