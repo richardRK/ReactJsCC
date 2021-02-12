@@ -6,6 +6,17 @@ import React, { useEffect, useState } from "react";
 import Tasks from "./Components/Tasks";
 
 const App = () => {
+  const [state, setState] = useState({ settings: null });
+
+  useEffect(() => {
+    fetch("settings.json").then((response) => {
+      response.json().then((settings) => {
+        // instead of setting state you can use it any other way
+        setState({ settings: settings });
+      });
+    });
+  });
+
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -20,17 +31,6 @@ const App = () => {
       reminder: true,
     },
   ]);
-
-  const [state, setState] = useState({ settings: null });
-
-  useEffect(() => {
-    fetch("settings.json").then((response) => {
-      response.json().then((settings) => {
-        // instead of setting state you can use it any other way
-        setState({ settings: settings });
-      });
-    });
-  });
 
   return (
     <div className="container">
