@@ -2,8 +2,12 @@
 import "./App.css";
 import Header from "./Components/Header";
 import React, { useEffect, useState } from "react";
-
 import Tasks from "./Components/Tasks";
+
+/*states get passed down, actions get passed up
+
+
+*/
 
 const App = () => {
   const [state, setState] = useState({ settings: null });
@@ -32,10 +36,18 @@ const App = () => {
     },
   ]);
 
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   return (
     <div className="container">
       <Header />
-      <Tasks tasks={tasks} />{" "}
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} onDelete={deleteTask} />
+      ) : (
+        "List is Empty"
+      )}
     </div>
   );
 };
