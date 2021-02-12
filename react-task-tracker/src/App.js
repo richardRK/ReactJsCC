@@ -35,11 +35,13 @@ const App = () => {
   return (
     <div className="container">
       <Header />
-      <Tasks tasks={tasks} />
+      <Tasks tasks={tasks} />{" "}
     </div>
   );
 };
 
 // class App extends React.component {}
+
+//delete task
 
 export default App;
