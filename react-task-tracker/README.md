@@ -2,8 +2,8 @@
 # Production
 
 >>npm run build
->npm i -g serve
->serve -s build -p 8000
+>>npm i -g serve
+>>serve -s build -p 8000
 
 # Imp Commands
 >npx create-react-app react-task-tracker
