@@ -48,7 +48,7 @@ export default function AddTask({ onAdd }) {
         />
       </div>
       <div className="form-control form-control-check">
-        <label htmlFor="">Set Reminder</label>
+        <label>Set Reminder</label>
         <input
           type="checkbox"
           checked={reminder}
