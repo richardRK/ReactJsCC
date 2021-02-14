@@ -6,6 +6,10 @@ import Tasks from "./Components/Tasks";
 import AddTask from "./Components/AddTask";
 import Forms from "./Components/Forms";
 import { useForm } from "./Components/useForm";
+import Footer from "./Components/Footer";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import About from "./Components/About";
 
 /*states get passed down, actions get passed up
 
@@ -46,6 +50,13 @@ const App = () => {
     return data;
   };
 
+  //fetch Tasks by Id
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`);
+    const data = await res.json();
+    return data;
+  };
+
   const [showAddTask, setShowAddTask] = useState(false);
 
   const [tasks, setTasks] = useState([]);
@@ -79,35 +90,53 @@ const App = () => {
   };
 
   // Toggle Reminder
-  const toggleReminder = (id) => {
+  const toggleReminder = async (id) => {
+    const taskToToggle = await fetchTask(id);
+    const updateTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
+
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updateTask),
+    });
+
+    const data = await res.json();
+
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, reminder: !task.reminder } : task
+        task.id === id ? { ...task, reminder: data.reminder } : task
       )
     );
   };
 
   return (
-    <div className="container">
-      <>
-        {/* <Forms values={values} handleChange={handleChange} /> */}
+    <Router>
+      <div className="container">
+        <>
+          {/* <Forms values={values} handleChange={handleChange} /> */}
 
-        <Header
-          onAdd={() => setShowAddTask(!showAddTask)}
-          showAdd={showAddTask}
-        />
-        {showAddTask && <AddTask onAdd={addTask} />}
-        {tasks.length > 0 ? (
-          <Tasks
-            tasks={tasks}
-            onDelete={deleteTask}
-            onToggle={toggleReminder}
+          <Header
+            onAdd={() => setShowAddTask(!showAddTask)}
+            showAdd={showAddTask}
           />
-        ) : (
-          "List is Empty"
-        )}
-      </>
-    </div>
+          {showAddTask && <AddTask onAdd={addTask} />}
+          {tasks.length > 0 ? (
+            <Tasks
+              tasks={tasks}
+              onDelete={deleteTask}
+              onToggle={toggleReminder}
+            />
+          ) : (
+            "List is Empty"
+          )}
+
+          <Route path="/about" component={About} />
+          <Footer />
+        </>
+      </div>
+    </Router>
   );
 };
 

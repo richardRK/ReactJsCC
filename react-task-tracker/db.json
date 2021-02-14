@@ -13,10 +13,10 @@
       "reminder": true
     },
     {
-      "id": 3,
-      "text": "Go to Movie",
-      "day": "Feb 7th at 1:30pm",
-      "reminder": true
+      "text": "T4",
+      "day": "Feb 5th at 2:30pm",
+      "reminder": true,
+      "id": 3
     }
   ]
 }
