@@ -4,6 +4,8 @@ import Header from "./Components/Header";
 import React, { useEffect, useState } from "react";
 import Tasks from "./Components/Tasks";
 import AddTask from "./Components/AddTask";
+import Forms from "./Components/Forms";
+import { useForm } from "./Components/useForm";
 
 /*states get passed down, actions get passed up
 
@@ -11,32 +13,42 @@ import AddTask from "./Components/AddTask";
 
 const App = () => {
   const [state, setState] = useState({ settings: null });
+  const [values, handleChange] = useForm({ email: "", password: "" });
 
   useEffect(() => {
-    fetch("settings.json").then((response) => {
-      response.json().then((settings) => {
-        // instead of setting state you can use it any other way
-        setState({ settings: settings });
-      });
-    });
-  });
+    // fetch("settings.json").then((response) => {
+    //   response.json().then((settings) => {
+    //     // instead of setting state you can use it any other way
+    //     setState({ settings: settings });
+    //   });
+    // });
+    const fetchSettings = async () => {
+      var settings = await fetch("settings.json");
+      setState({ settings: settings });
+    };
+
+    fetchSettings();
+  }, []);
+
+  //get Tasks
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks();
+      setTasks(tasksFromServer);
+    };
+    getTasks();
+  }, []);
+
+  //fetch Tasks
+  const fetchTasks = async () => {
+    const res = await fetch("http://localhost:5000/tasks");
+    const data = await res.json();
+    return data;
+  };
 
   const [showAddTask, setShowAddTask] = useState(false);
 
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Doctors Appointment",
-      day: "Feb 5th at 2:30pm",
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: "Meeting at School",
-      day: "Feb 6th at 1:30pm",
-      reminder: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   //add task
   const addTask = (task) => {
@@ -61,16 +73,24 @@ const App = () => {
 
   return (
     <div className="container">
-      <Header
-        onAdd={() => setShowAddTask(!showAddTask)}
-        showAdd={showAddTask}
-      />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-      ) : (
-        "List is Empty"
-      )}
+      <>
+        <Forms values={values} handleChange={handleChange} />
+
+        <Header
+          onAdd={() => setShowAddTask(!showAddTask)}
+          showAdd={showAddTask}
+        />
+        {showAddTask && <AddTask onAdd={addTask} />}
+        {tasks.length > 0 ? (
+          <Tasks
+            tasks={tasks}
+            onDelete={deleteTask}
+            onToggle={toggleReminder}
+          />
+        ) : (
+          "List is Empty"
+        )}
+      </>
     </div>
   );
 };

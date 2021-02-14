@@ -1,10 +1,12 @@
 import React from "react";
 
-import { useState } from "react";
+import { useState, useForm } from "react";
 
 export default function AddTask({ onAdd }) {
   const [text, setText] = useState("");
   const [day, setDay] = useState("");
+
+  // const [values, handleChange] = useForm({ firstName: "", lastName: "" });
 
   const [reminder, setRemider] = useState(false);
 
