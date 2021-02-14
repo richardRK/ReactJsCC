@@ -4,6 +4,7 @@
 ### npm run build
 ### npm i -g serve
 ### serve -s build -p 8000
+### `npm i json-server`
 
 # Imp Commands
 ### npx create-react-app react-task-tracker
