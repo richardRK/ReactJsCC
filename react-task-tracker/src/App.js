@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./Components/Header";
 import React, { useEffect, useState } from "react";
 import Tasks from "./Components/Tasks";
+import AddTask from "./Components/AddTask";
 
 /*states get passed down, actions get passed up
 
@@ -36,7 +37,12 @@ const App = () => {
     },
   ]);
 
-  //delete task
+  //add task
+  const addTask = (task) => {
+    console.log(task);
+  };
+
+  //Delete task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
@@ -53,6 +59,7 @@ const App = () => {
   return (
     <div className="container">
       <Header />
+      <AddTask onAdd = {addTask}/>
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
