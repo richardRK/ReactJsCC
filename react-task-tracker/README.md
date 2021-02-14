@@ -1,14 +1,14 @@
 
 # Production
 
-npm run build
-npm i -g serve
-serve -s build -p 8000
+>npm run build
+>npm i -g serve
+>serve -s build -p 8000
 
 # Imp Commands
---npx create-react-app react-task-tracker
---git restore --staged react-task-tracker
---rafce
+>npx create-react-app react-task-tracker
+>git restore --staged react-task-tracker
+>rafce
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
