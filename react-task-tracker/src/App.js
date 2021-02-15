@@ -121,17 +121,6 @@ const App = () => {
             onAdd={() => setShowAddTask(!showAddTask)}
             showAdd={showAddTask}
           />
-          {/* {showAddTask && <AddTask onAdd={addTask} />}
-          {tasks.length > 0 ? (
-            <Tasks
-              tasks={tasks}
-              onDelete={deleteTask}
-              onToggle={toggleReminder}
-            />
-          ) : (
-            "List is Empty"
-          )} */}
-
           <Route
             path="/"
             exact
